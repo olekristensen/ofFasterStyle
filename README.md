@@ -7,5 +7,9 @@ https://github.com/olekristensen/ofFasterStyle/releases/tag/v0.8
 
 ## Thanks to
 Lilia Amundsen, the master student who initiated this project
+
 DEIC, the super computing guys who let us grind our teeth with this little project on Abacus 2.0 
+
 Logan Engstrom, whose tensorflow implementation of a fast style transfer network provided a good starting point for learning.
+
+Memo, who always is ahead of the curve in the openFrameworks community - super awsome addon - really!
