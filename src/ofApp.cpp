@@ -1,8 +1,7 @@
-#include "ofApp.h"
+ #include "ofApp.h"
 
 //--------------------------------------------------------------
 void ofApp::setup(){
-
 
     dir.listDir(modelDir);
     dir.sort(); // in linux the file system doesn't return file lists ordered in alphabetical order
@@ -27,21 +26,19 @@ void ofApp::setup(){
         if(loadGraph(m.first)) break;
     }
 
-    ofSetWindowShape(img_width, img_height);
-
-    gui.setup(); // most of the time you don't need a name
+    gui.setup(); //GUI  most of the time you don't need a name
     gui.add(noiseAmount.setup("noise", 0, 0, 255));
-    gui.add(secondsInterval.setup("interval (sec)", 1*60, 3, 20*60));
+    gui.add(secondsInterval.setup("interval (sec)",1*60, 3, 20*60));
     gui.add(fps.setup("FPS", ""));
 
     // set up camera
     grab.initGrabber(img_width, img_height);
 
-    cam_float_img.allocate(img_width, img_height,OF_IMAGE_COLOR);
-    styled_float_img.allocate(img_width, img_height,OF_IMAGE_COLOR);
+    cam_float_img.allocate(img_height,img_width,OF_IMAGE_COLOR);
+    styled_float_img.allocate(img_height,img_width,OF_IMAGE_COLOR);
 
     image_dims = { img_width, img_height, 3 };
-    itensor_dims = {1, img_height, img_width , 3 };
+    itensor_dims = { 1, img_width , img_height, 3 };
 
     for(auto i : image_dims) num_elements *= i;
 
@@ -83,7 +80,7 @@ void ofApp::update(){
             cam_img.update();
         }
 
-
+        cam_img.rotate90(3);
 
         // convert to float
         ofFloatPixels fpix = cam_img.getPixels();
@@ -139,7 +136,6 @@ void ofApp::update(){
                 ofLogError() << s.error_message();
             }
 
-
             auto t_img_output = output_tensors[0];
 
             ofLog() << t_img_output.DebugString();
@@ -149,7 +145,7 @@ void ofApp::update(){
             float* pix_data = styled_float_img.getPixels().getData();
             if(!pix_data) {
                 ofLogError() << "Could not classify. pixel data is NULL";
-            }else{
+            } else {
                 for(int i=0; i<num_elements; i++) pix_data[i] = (pix_data[i] / 255.0f);
             }
 
@@ -160,6 +156,7 @@ void ofApp::update(){
             ipix.setNumChannels(3);
 
             styled_img.setFromPixels(ipix);
+            styled_img.rotate90(3);
 
         }
 
@@ -174,6 +171,7 @@ void ofApp::draw(){
         cam_float_img.draw(ofGetWidth()-(20+(cam_float_img.getWidth()/4)),20,cam_float_img.getWidth()/4,cam_float_img.getHeight()/4);
         gui.draw();
     }
+
 }
 
 //--------------------------------------------------------------

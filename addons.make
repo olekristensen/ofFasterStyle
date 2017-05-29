@@ -1,0 +1,3 @@
+ofxKinect
+ofxMSATensorFlow
+ofxGui
